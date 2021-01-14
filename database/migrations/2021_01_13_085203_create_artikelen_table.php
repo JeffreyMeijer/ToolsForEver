@@ -15,9 +15,10 @@ class CreateArtikelenTable extends Migration
     {
         Schema::create('artikelen', function (Blueprint $table) {
             $table->id();
-            $table->string("artikel");
+            $table->string("artikel", 40);
             $table->integer("voorraad");
-            $table->string("beschrijving");
+            $table->string("beschrijving", 120);
+            $table->string('afbeelding')->default('default.jpg');
             $table->timestamps();
         });
     }
