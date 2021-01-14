@@ -3,7 +3,6 @@
         <x-jet-application-logo class="block h-12 w-auto" />
     </div>
     <div>
-    <livewire:show-products/>
     </div>
 
     <div class="mt-8 text-2xl">
