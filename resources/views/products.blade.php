@@ -10,8 +10,9 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <livewire:show-products key="{{ now() }}"/>
             </div>
-
-            <livewire:create-product/>
+            <div>
+                <livewire:create-product/>
+            </div>
         </div>
     </div>
 </x-app-layout>

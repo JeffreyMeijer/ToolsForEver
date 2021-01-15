@@ -11,4 +11,8 @@ class Product extends Model
 
     protected $table = 'artikelen';
     public $timestamps = false;
+
+    protected $fillable = [
+        'artikel', 'voorraad', 'beschrijving', 'afbeelding'
+    ];
 }
