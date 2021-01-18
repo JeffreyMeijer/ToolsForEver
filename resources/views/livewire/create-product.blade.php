@@ -7,7 +7,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createProductLabel">Modal title</h5>
+          <h5 class="modal-title" id="createProductLabel">Product aanmaken</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -23,6 +23,14 @@
                 @error('voorraad') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
+              <label for="locatieInput">Locatie</label>
+              <select class="form-select" id="createLocation" wire:model="locatie">
+                <option value="1" selected>Assen</option>
+                <option value="2">Emmen</option>
+              </select>
+              @error('locatie') <span class="text-danger error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
                 <label for="beschrijvingInput">Korte beschrijving</label>
                 <input type="email" class="form-control" id="beschrijvingInput" wire:model="beschrijving" placeholder="Korte beschrijving">
                 @error('beschrijving') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -31,7 +39,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
-          <button wire:click.prevent="store" class="btn btn-primary">Product aanmaken</button>
+          <button wire:click.prevent="store()" class="btn btn-primary">Product aanmaken</button>
         </div>
       </div>
     </div>

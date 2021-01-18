@@ -12,6 +12,16 @@ class Product extends Model
     protected $table = 'artikelen';
     public $timestamps = false;
 
+    public function locations()
+    {
+        return $this->belongsToMany(Locatie::class, 'artikel_locatie');
+    }
+
+    public function addLocation($id)
+    {
+        $this->locations()->syncWithoutDetaching($id);
+    }
+
     protected $fillable = [
         'artikel', 'voorraad', 'beschrijving', 'afbeelding'
     ];
