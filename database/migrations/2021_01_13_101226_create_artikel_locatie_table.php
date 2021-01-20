@@ -14,8 +14,8 @@ class CreateArtikelLocatieTable extends Migration
     public function up()
     {
         Schema::create('artikel_locatie', function (Blueprint $table) {
-            $table->foreignId('product_id')->references('id')->on('artikelen')->contrained();
-            $table->foreignId('locatie_id')->references('id')->on('locatie')->contrained();
+            $table->foreignId('product_id')->references('id')->on('artikelen')->onDelete('cascade')->contrained();
+            $table->foreignId('locatie_id')->references('id')->on('locatie')->onDelete('cascade')->contrained();
             $table->timestamps();
         });
     }

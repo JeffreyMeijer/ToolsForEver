@@ -32,10 +32,15 @@
                 <input type="email" class="form-control" id="beschrijvingInput" wire:model="beschrijving" placeholder="Korte beschrijving">
                 @error('beschrijving') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
+            <div class="form-group">
+              <label for="fotoInput">Afbeelding</label>
+              <input type="file" class="form-control" id="fotoInput" wire:model="afbeelding">
+              @error('afbeelding') <span class="text-danger error">{{ $message }}</span>@enderror
+            </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+          <button wire:click.prevent="cancel()" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
           <button wire:click.prevent="update()" class="btn btn-primary">Product updaten</button>
         </div>
       </div>
