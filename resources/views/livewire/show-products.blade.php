@@ -21,8 +21,8 @@
                                 <td>{{ $location->naam }}</td>
                                 <td>{{ $product->beschrijving }}</td>
                                 <td>
-                                <button data-bs-toggle="modal" data-bs-target="#updateProduct" wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
-                                <button wire:click="delete({{ $product->id }})">Delete</button>
+                                <button data-bs-toggle="modal" data-bs-target="#updateProduct" wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Bewerk</button>
+                                <button wire:click="delete({{ $product->id }})" class="btn btn-danger btn-sm">Verwijder</button>
                                 </td>
                             </tr>
                         @endif
@@ -34,8 +34,8 @@
                         <td>{{ $location->naam }}</td>
                         <td>{{ $product->beschrijving }}</td>
                         <td>
-                        <button data-bs-toggle="modal" data-bs-target="#updateProduct" wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
-                        <button wire:click="delete({{ $product->id }})">Delete</button>
+                        <button data-bs-toggle="modal" data-bs-target="#updateProduct" wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Bewerk</button>
+                        <button wire:click="delete({{ $product->id }})" class="btn btn-danger btn-sm">Verwijder</button>
                         </td>
                     </tr>
                 @endif

@@ -45,7 +45,7 @@ class ShowProducts extends Component
         ]);
 
         $this->validate([
-            'afbeelding' => 'image|max:2048',
+            'afbeelding' => 'image|max:4096',
         ]);
         $product = Product::create($validatedData);
         // $product->afbeelding->store('afbeeldingen');
@@ -93,14 +93,20 @@ class ShowProducts extends Component
             'afbeelding' => 'image|max:4096'
         ]);
 
+        
+        
         if ($this->artikel_id) {
             $product = Product::find($this->artikel_id);
+            
+            $imageName = $product->id . "_" . $this->artikel . '.' . $this->afbeelding->extension();
+            $this->afbeelding->storeAs('product_photos', $imageName);
+            
             $product->update([
                 'artikel' => $this->artikel,
                 'voorraad' => $this->voorraad,
                 'locatie' => $this->locatie,
                 'beschrijving' => $this->beschrijving,
-                'afbeelding' => $this->afbeelding
+                'afbeelding' => $imageName
             ]);
             session()->flash('message', 'Users Updated Successfully.');
             $this->refreshInput();
