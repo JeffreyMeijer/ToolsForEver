@@ -14,8 +14,8 @@ class MedewerkerLocatie extends Migration
     public function up()
     {
         Schema::create('medewerker_locatie', function (Blueprint $table) {
-            $table->foreignId('medewerker_id')->references('id')->on('medewerker')->contrained();
-            $table->foreignId('locatie_id')->references('id')->on('locatie')->contrained();
+            $table->foreignId('employee_id')->references('id')->on('medewerker')->onDelete('cascade')->contrained();
+            $table->foreignId('locatie_id')->references('id')->on('locatie')->onDelete('cascade')->contrained();
             $table->timestamps();
         });
     }

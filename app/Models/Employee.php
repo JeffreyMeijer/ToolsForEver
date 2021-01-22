@@ -19,4 +19,8 @@ class Employee extends Model
     {
         $this->locations()->syncWithoutDetaching($id);
     }
+
+        protected $fillable = [
+        'naam', 'positie', 'beschrijving', 'afbeelding'
+    ];
 }
