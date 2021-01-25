@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="voorraadInput">Voorraad</label>
-                <input type="email" class="form-control" id="voorraadInput" wire:model="voorraad" placeholder="Voorraad">
+                <input type="number" class="form-control" id="voorraadInput" wire:model="voorraad" placeholder="Voorraad">
                 @error('voorraad') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
