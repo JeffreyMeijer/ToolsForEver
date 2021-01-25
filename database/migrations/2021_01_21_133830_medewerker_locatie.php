@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedewerkerTable extends Migration
+class MedewerkerLocatie extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateMedewerkerTable extends Migration
      */
     public function up()
     {
-        Schema::create('medewerker', function (Blueprint $table) {
-            $table->id();
-            $table->string("naam", 40);
-            $table->string("positie", 120);
-            $table->string("beschrijving", 120);
-            $table->string('afbeelding')->default('default.jpg');
+        Schema::create('medewerker_locatie', function (Blueprint $table) {
+            $table->foreignId('employee_id')->references('id')->on('medewerker')->onDelete('cascade')->contrained();
+            $table->foreignId('locatie_id')->references('id')->on('locatie')->onDelete('cascade')->contrained();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateMedewerkerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medewerker');
+        Schema::dropIfExists('medewerker_locatie');
     }
 }
