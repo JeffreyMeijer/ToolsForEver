@@ -6,11 +6,14 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Locatie;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class ShowEmployees extends Component
 {
     use WithFileUploads;
-    public $employees, $locaties, $medewerker_id, $naam, $positie, $locatie, $beschrijving, $afbeelding;
+    public $locaties, $medewerker_id, $naam, $positie, $locatie, $beschrijving, $afbeelding;
+    public $search = '';
+    public $perPage = 10;
     public $currentlocatie;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -27,12 +30,15 @@ class ShowEmployees extends Component
 
     public function mount()
     {
-        $this->employees = Employee::all();
+        // $this->employees = Employee::all();
+        // $this->employees = Employee::simplePaginate(10);
         $this->locaties = Locatie::all();
     }
     public function render()
     {
-        return view('livewire.show-employees');
+        return view('livewire.show-employees', [
+            'employees' => Employee::search($this->search)->simplePaginate($this->perPage),
+        ]);
     }
 
      public function store()
@@ -101,7 +107,7 @@ class ShowEmployees extends Component
             $imageName = $employee->id . "_" . $this->naam . '.' . $this->afbeelding->extension();
             $this->afbeelding->storeAs('employee_photos', $imageName);
             
-            $product->update([
+            $employee->update([
                 'naam' => $this->naam,
                 'positie' => $this->positie,
                 'locatie' => $this->locatie,
