@@ -3,11 +3,11 @@
   Medewerker aanmaken
   </button>
 
-  <div wire:ignore.self class="modal fade" id="createEmployee" tabindex="-1" role="dialog" aria-labelledby="createEmployeeLabel" aria-hidden="true">
+  <div wire:ignore.self class="modal fade" id="createEmployee" tabindex="-1" role="dialog" aria-labelledby="createEmployeeLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createProductLabel">Medewerker aanmaken</h5>
+          <h5 class="modal-title" id="createEmployeeLabel">Medewerker aanmaken</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -28,7 +28,9 @@
                 <option value="" selected>Selecteer een locatie</option>
                 <option value="1">Assen</option>
                 <option value="2">Emmen</option>
+                <option value="new">Nieuwe locatie</option>
               </select>
+              @include('livewire.create-location')
               @error('locatie') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
