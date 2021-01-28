@@ -20,7 +20,12 @@ class Employee extends Model
         $this->locations()->syncWithoutDetaching($id);
     }
 
-        protected $fillable = [
+    public static function search($search)
+    {
+        return empty($search) ? static::query() : static::query()->where('id', 'like', '%'.$search.'%')->orWhere('naam', 'like', '%'.$search.'%')->orWhere('positie', 'like', '%'.$search.'%');
+    }
+
+    protected $fillable = [
         'naam', 'positie', 'beschrijving', 'afbeelding'
     ];
 }
