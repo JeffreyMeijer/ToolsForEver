@@ -23,8 +23,10 @@
               <label for="locatieInput">Locatie</label>
               <select class="form-select" id="locatieInput" wire:model="locatie">
                 <option value="" selected>Selecteer een locatie</option>
-                <option value="1" selected>Assen</option>
-                <option value="2">Emmen</option>
+                @foreach ($locaties as $location)
+                  <option value="{{ $location->id }}">{{ $location->naam }}</option>
+                @endforeach
+                {{-- <option value="2">Emmen</option> --}}
               </select>
               @error('locatie') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>

@@ -1,5 +1,5 @@
 <div>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProduct">
+  <button type="button" class="btn btn-primary py-3 px-4 pr-8" data-bs-toggle="modal" data-bs-target="#createProduct">
   Product aanmaken
   </button>
 

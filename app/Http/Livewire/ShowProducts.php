@@ -10,7 +10,9 @@ use App\Models\Locatie;
 class ShowProducts extends Component
 {
     use WithFileUploads;
-    public $products, $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding;
+    public $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding;
+    public $search = '';
+    public $perPage = 10;
     public $currentlocatie;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -27,12 +29,14 @@ class ShowProducts extends Component
 
     public function mount()
     {
-        $this->products = Product::all();
+        // $this->products = Product::all();
         $this->locaties = Locatie::all();
     }
     public function render()
     {
-        return view('livewire.show-products');
+        return view('livewire.show-products', [
+            'products' => Product::search($this->search)->simplePaginate($this->perPage),
+        ]);
     }
 
     public function store()
