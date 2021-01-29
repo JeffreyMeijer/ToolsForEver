@@ -81,6 +81,7 @@
         </div> --}}
             @endforeach
         </table>
+        {{ $products->links() }}
         {{-- <div style="display:flex;justify-content:space-between;">
             @include("livewire.create-product")
         </div> --}}
