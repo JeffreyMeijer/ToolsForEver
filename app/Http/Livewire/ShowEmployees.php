@@ -16,8 +16,16 @@ class ShowEmployees extends Component
     public $perPage = 10;
     public $currentlocatie;
 
+    /**
+     * The events that can be emitted when needed in the component
+     * @var array
+    */
     protected $listeners = ['refreshComponent' => '$refresh'];
 
+
+    /**
+     * Refreshes all the inputs of the form when needed.
+    */
     private function refreshInput()
     {
         $this->medewerker_id = '';
@@ -28,12 +36,18 @@ class ShowEmployees extends Component
         $this->afbeelding = '';
     }
 
+    /**
+     * Mounts all the public variables needed in case it failed to do so automatically.
+    */
     public function mount()
     {
-        // $this->employees = Employee::all();
-        // $this->employees = Employee::simplePaginate(10);
         $this->locaties = Locatie::all();
     }
+
+    /**
+     * Renders the page / view
+     * @return void
+    */
     public function render()
     {
         return view('livewire.show-employees', [
@@ -41,7 +55,11 @@ class ShowEmployees extends Component
         ]);
     }
 
-     public function store()
+    /**
+     * Stores all the data that was entered into the form in the database for later use.
+    */
+
+    public function store()
     {
         $validatedData = $this->validate([
             'naam' => 'required',
@@ -54,7 +72,6 @@ class ShowEmployees extends Component
             'afbeelding' => 'image|max:4096',
         ]);
         $employee = Employee::create($validatedData);
-        // $product->afbeelding->store('afbeeldingen');
         $imageName = $employee->id . "_" . $this->naam . '.' . $this->afbeelding->extension();
         $this->afbeelding->storeAs('employee_photos', $imageName);
 
@@ -73,6 +90,10 @@ class ShowEmployees extends Component
         $this->emit('refreshComponent');
     }
     
+    /**
+     * Sets the edit form up with the existing data
+     * @param int $id The ID of the Employee we're going to edit
+    */
     public function edit($id)
     {
         $employee = Employee::where('id',$id)->first();
@@ -84,11 +105,17 @@ class ShowEmployees extends Component
         $this->afbeelding = $employee->afbeelding;
     }
 
+    /**
+     * When the user cancels a creation or edit it resets all the inputs for the next edit or creation.
+    */
     public function cancel()
     {
         $this->refreshInput();
     }
 
+    /**
+     * Updates the Employee that was being edited.
+    */
     public function update()
     {
         $validatedData = $this->validate([
@@ -121,6 +148,10 @@ class ShowEmployees extends Component
         }
     }
 
+    /**
+     * Deletes the employee based on their ID
+     * @param int $id Employee ID
+    */
     public function delete($id)
     {
         if($id){
