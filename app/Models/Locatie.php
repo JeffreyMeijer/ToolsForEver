@@ -29,4 +29,8 @@ class Locatie extends Model
     {
         $this->products()->syncWithoutDetaching($id);
     }
+
+    protected $fillable = [
+        'naam', 'adres', 'postcode'
+    ];
 }
