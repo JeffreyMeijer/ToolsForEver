@@ -39,7 +39,6 @@ class ShowProducts extends Component
     */
     public function mount()
     {
-        // $this->products = Product::all();
         $this->locaties = Locatie::all();
     }
 
@@ -107,7 +106,7 @@ class ShowProducts extends Component
     
     /**
      * Sets the edit form up with the existing data
-     * @param int $id The ID of the Employee we're going to edit
+     * @param int $id The ID of the Product we're going to edit
     */
     public function edit($id)
     {
@@ -129,7 +128,7 @@ class ShowProducts extends Component
     }
 
     /**
-     * Updates the Employee that was being edited.
+     * Updates the Product that was being edited.
     */
     public function update()
     {
@@ -183,7 +182,7 @@ class ShowProducts extends Component
     }
 
     /**
-     * Deletes the employee based on their ID
+     * Deletes the Product based on their ID
      * @param int $id Employee ID
     */
     public function delete($id)

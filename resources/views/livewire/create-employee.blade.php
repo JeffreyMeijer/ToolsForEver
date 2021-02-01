@@ -26,13 +26,16 @@
               <label for="locatieInput">Locatie</label>
               <select class="form-select" id="createLocation" wire:model="locatie">
                 <option value="" selected>Selecteer een locatie</option>
-                <option value="1">Assen</option>
-                <option value="2">Emmen</option>
-                <option value="new">Nieuwe locatie</option>
+                  @foreach ($locaties as $location)
+                    <option value="{{ $location->id }}">{{ $location->naam }}</option>
+                  @endforeach
+                <option value="new">Nieuwe locatie aanmaken</option>
               </select>
-              @include('livewire.create-location')
               @error('locatie') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
+            @if($locatie == 'new')
+              @include('livewire.create-location')
+            @endif
             <div class="form-group">
                 <label for="beschrijvingInput">Korte beschrijving</label>
                 <textarea name="beschrijving" class="form-control" id="beschrijvingInput" wire:model="beschrijving" placeholder="Korte beschrijving" rows="4" cols="5"></textarea>

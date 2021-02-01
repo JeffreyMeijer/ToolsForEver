@@ -24,6 +24,7 @@ class Employee extends Model
     /**
      * Adds a location to the Employee.
      *
+     * @param int $id location id to add
      * @return void
     */
 
@@ -33,8 +34,22 @@ class Employee extends Model
     }
 
     /**
+     * Sets the location of a specific product by first detaching all locations and then attaching just one location.
+     * 
+     * @param int $id location id to set
+     * @return void
+    */
+    public function setLocation($id)
+    {
+        $this->locations()->detach();
+
+        $this->addLocation($id);
+    }
+
+    /**
      * Searches for an Employee based on their Name or Position in the company.
      *
+     * @param string $search the string to search for
      * @return void
     */
 
