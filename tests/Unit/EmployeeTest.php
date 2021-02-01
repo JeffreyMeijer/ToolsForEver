@@ -4,20 +4,21 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Employee;
+use App\Models\Locatie;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EmployeeTest extends TestCase
 {
     use RefreshDatabase;
     /**
-     * A basic test to see if employees get created
+     * A basic test to see if employees get created with a location relationship
      *
      * @return void
     */
 
     public function test_createEmployees()
     {
-        $employees = Employee::factory()->count(5)->create();
+        $employees = Employee::factory()->count(5)->has(Locatie::factory()->count(1), 'locations')->create();
 
         $this->assertEquals(count($employees), 5);
     }

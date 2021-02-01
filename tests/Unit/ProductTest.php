@@ -4,20 +4,22 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\Locatie;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductTest extends TestCase
 {
     use RefreshDatabase;
     /**
-     * A basic test to see if products get created
+     * A basic test to see if products get created with a location relationship
      *
      * @return void
     */
 
     public function test_createProducts()
     {
-        $products = Product::factory()->count(5)->create();
+        $products = Product::factory()->count(5)->has(Locatie::factory()->count(1), 'locations')->create();
+
 
         $this->assertEquals(count($products), 5);
     }
