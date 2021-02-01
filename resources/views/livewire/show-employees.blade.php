@@ -1,16 +1,29 @@
 {{-- <div class="grid-container"> --}}
 <div>
     <div class="input-group grid justify-between py-4">
-        <div class="w-2/4 relative mx-1">
+        <div class="w-2/6 relative pr-3">
             <input wire:model="search" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Zoeken...">
         </div>
-        <div class="w-1/4 relative mx-1">
+        <div class="w-2/6 relative pr-3">
+            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="selectLocation" wire:model="currentlocatie">
+                <option value="0" selected>Alles</option>
+                @foreach ($locaties as $location)
+                  <option value="{{ $location->id }}">{{ $location->naam }}</option>
+                @endforeach
+                {{-- <option value="1">Assen</option> --}}
+                {{-- <option value="2">Emmen</option> --}}
+            </select>
+        </div>
+        <div class="w-1/6 relative pr-3">
             <select wire:model="perPage" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option>10</option>
                 <option>25</option>
                 <option>50</option>
                 <option>100</option>
             </select>
+        </div>
+        <div class="w-1/6 relative px-1">
+            @include("livewire.create-employee")
         </div>
     </div>
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -87,13 +100,5 @@
             @endforeach
         </table>
         {{$employees->links()}}
-        <div style="display:flex;justify-content:space-between;">
-        @include("livewire.create-employee")
-            <select class="form-select" style="width:20%;" id="selectLocation" wire:model="currentlocatie">
-                <option value="0" selected>Alles</option>
-                <option value="1">Assen</option>
-                <option value="2">Emmen</option>
-            </select>
-        </div>
     </div>
 </div>
