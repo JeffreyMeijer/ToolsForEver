@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 class ShowEmployees extends Component
 {
     use WithFileUploads;
-    public $locaties, $medewerker_id, $naam, $positie, $locatie, $beschrijving, $afbeelding;
+    public $locaties, $medewerker_id, $naam, $positie, $locatie, $beschrijving, $afbeelding, $newlocatienaam, $newlocatieadres, $newlocatiepostcode;
     public $search = '';
     public $perPage = 10;
     public $currentlocatie;
@@ -64,16 +64,32 @@ class ShowEmployees extends Component
         $validatedData = $this->validate([
             'naam' => 'required',
             'positie' => 'required',
-            'locatie' => 'required',
             'beschrijving' => 'string|max:120',
         ]);
 
         $this->validate([
+            'locatie' => 'required',
             'afbeelding' => 'image|max:4096',
         ]);
         $employee = Employee::create($validatedData);
         $imageName = $employee->id . "_" . $this->naam . '.' . $this->afbeelding->extension();
         $this->afbeelding->storeAs('employee_photos', $imageName);
+
+        if($this->locatie == 'new') {
+            $this->validate([
+                'newlocatienaam' => 'required',
+                'newlocatieadres' => 'required',
+                'newlocatiepostcode' => 'required'
+            ]);
+
+            $newlocation = Locatie::create([
+                'naam' => $this->newlocatienaam,
+                'adres' => $this->newlocatieadres,
+                'postcode' => $this->newlocatiepostcode
+            ]);
+
+            $this->locatie = $newlocation->id;
+        }
 
         $employee->update([
             'afbeelding' => $imageName,
@@ -121,9 +137,12 @@ class ShowEmployees extends Component
         $validatedData = $this->validate([
             'naam' => 'required',
             'positie' => 'required',
-            'locatie' => 'required',
             'beschrijving' => 'string|max:120',
-            'afbeelding' => 'image|max:4096'
+        ]);
+
+        $this->validate([
+            'locatie' => 'required',
+            'afbeelding' => 'image|max:4096',
         ]);
 
         
@@ -134,13 +153,31 @@ class ShowEmployees extends Component
             $imageName = $employee->id . "_" . $this->naam . '.' . $this->afbeelding->extension();
             $this->afbeelding->storeAs('employee_photos', $imageName);
             
+            if($this->locatie == 'new') {
+                $this->validate([
+                    'newlocatienaam' => 'required',
+                    'newlocatieadres' => 'required',
+                    'newlocatiepostcode' => 'required'
+                ]);
+
+                $newlocation = Locatie::create([
+                    'naam' => $this->newlocatienaam,
+                    'adres' => $this->newlocatieadres,
+                    'postcode' => $this->newlocatiepostcode
+                ]);
+
+                $this->locatie = $newlocation->id;
+            }
+
             $employee->update([
                 'naam' => $this->naam,
                 'positie' => $this->positie,
-                'locatie' => $this->locatie,
                 'beschrijving' => $this->beschrijving,
                 'afbeelding' => $imageName
             ]);
+
+            $employee->setLocation($this->locatie);
+
             session()->flash('message', 'Medewerker Updated Successfully.');
             $this->refreshInput();
             $this->emit('refreshComponent');
