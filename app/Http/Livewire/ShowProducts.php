@@ -10,11 +10,20 @@ use App\Models\Locatie;
 class ShowProducts extends Component
 {
     use WithFileUploads;
-    public $products, $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding;
+    public $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding;
+    public $search = '';
+    public $perPage = 10;
     public $currentlocatie;
 
+    /**
+     * The events that can be emitted when needed in the component
+     * @var array
+    */
     protected $listeners = ['refreshComponent' => '$refresh'];
 
+    /**
+     * Refreshes all the inputs of the form when needed.
+    */
     private function refreshInput()
     {
         $this->artikel_id = '';
@@ -25,16 +34,29 @@ class ShowProducts extends Component
         $this->afbeelding = '';
     }
 
+    /**
+     * Mounts all the public variables needed in case it failed to do so automatically.
+    */
     public function mount()
     {
-        $this->products = Product::all();
+        // $this->products = Product::all();
         $this->locaties = Locatie::all();
     }
+
+    /**
+     * Renders the page / view
+     * @return void
+    */
     public function render()
     {
-        return view('livewire.show-products');
+        return view('livewire.show-products', [
+            'products' => Product::search($this->search)->simplePaginate($this->perPage),
+        ]);
     }
 
+    /**
+     * Stores all the data that was entered into the form in the database for later use.
+    */
     public function store()
     {
         $validatedData = $this->validate([
@@ -67,6 +89,10 @@ class ShowProducts extends Component
         $this->emit('refreshComponent');
     }
     
+    /**
+     * Sets the edit form up with the existing data
+     * @param int $id The ID of the Employee we're going to edit
+    */
     public function edit($id)
     {
         $product = Product::where('id',$id)->first();
@@ -78,11 +104,17 @@ class ShowProducts extends Component
         $this->afbeelding = $product->afbeelding;
     }
 
+    /**
+     * When the user cancels a creation or edit it resets all the inputs for the next edit or creation.
+    */
     public function cancel()
     {
         $this->refreshInput();
     }
 
+    /**
+     * Updates the Employee that was being edited.
+    */
     public function update()
     {
         $validatedData = $this->validate([
@@ -115,6 +147,10 @@ class ShowProducts extends Component
         }
     }
 
+    /**
+     * Deletes the employee based on their ID
+     * @param int $id Employee ID
+    */
     public function delete($id)
     {
         if($id){
