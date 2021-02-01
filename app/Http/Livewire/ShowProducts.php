@@ -10,7 +10,7 @@ use App\Models\Locatie;
 class ShowProducts extends Component
 {
     use WithFileUploads;
-    public $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding;
+    public $locaties, $artikel_id, $artikel, $voorraad, $locatie, $beschrijving, $afbeelding, $newlocatienaam, $newlocatieadres, $newlocatiepostcode;
     public $search = '';
     public $perPage = 10;
     public $currentlocatie;
@@ -62,18 +62,34 @@ class ShowProducts extends Component
         $validatedData = $this->validate([
             'artikel' => 'required',
             'voorraad' => 'required',
-            'locatie' => 'required',
             'beschrijving' => 'string|max:120',
         ]);
 
         $this->validate([
+            'locatie' => 'required',
             'afbeelding' => 'image|max:4096',
         ]);
+
         $product = Product::create($validatedData);
-        // $product->afbeelding->store('afbeeldingen');
         $imageName = $product->id . "_" . $this->artikel . '.' . $this->afbeelding->extension();
         $this->afbeelding->storeAs('product_photos', $imageName);
 
+        if($this->locatie == 'new') {
+            $this->validate([
+                'newlocatienaam' => 'required',
+                'newlocatieadres' => 'required',
+                'newlocatiepostcode' => 'required'
+            ]);
+
+            $newlocation = Locatie::create([
+                'naam' => $this->newlocatienaam,
+                'adres' => $this->newlocatieadres,
+                'postcode' => $this->newlocatiepostcode
+            ]);
+
+            $this->locatie = $newlocation->id;
+        }
+        
         $product->update([
             'afbeelding' => $imageName,
         ]);
@@ -120,12 +136,13 @@ class ShowProducts extends Component
         $validatedData = $this->validate([
             'artikel' => 'required',
             'voorraad' => 'required',
-            'locatie' => 'required',
             'beschrijving' => 'string|max:120',
-            'afbeelding' => 'image|max:4096'
         ]);
 
-        
+        $this->validate([
+            'locatie' => 'required',
+            'afbeelding' => 'image|max:4096',
+        ]);
         
         if ($this->artikel_id) {
             $product = Product::find($this->artikel_id);
@@ -133,13 +150,31 @@ class ShowProducts extends Component
             $imageName = $product->id . "_" . $this->artikel . '.' . $this->afbeelding->extension();
             $this->afbeelding->storeAs('product_photos', $imageName);
             
+            if($this->locatie == 'new') {
+                $this->validate([
+                    'newlocatienaam' => 'required',
+                    'newlocatieadres' => 'required',
+                    'newlocatiepostcode' => 'required'
+                ]);
+
+                $newlocation = Locatie::create([
+                    'naam' => $this->newlocatienaam,
+                    'adres' => $this->newlocatieadres,
+                    'postcode' => $this->newlocatiepostcode
+                ]);
+
+                $this->locatie = $newlocation->id;
+            }
+
             $product->update([
                 'artikel' => $this->artikel,
                 'voorraad' => $this->voorraad,
-                'locatie' => $this->locatie,
                 'beschrijving' => $this->beschrijving,
                 'afbeelding' => $imageName
             ]);
+
+            $product->setLocation($this->locatie);
+            
             session()->flash('message', 'Users Updated Successfully.');
             $this->refreshInput();
             $this->emit('refreshComponent');

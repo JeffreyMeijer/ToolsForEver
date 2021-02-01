@@ -25,6 +25,7 @@ class Product extends Model
     /**
      * Adds a location to a specific product.
      *
+     * @param int $id location id to add
      * @return void
     */
     public function addLocation($id)
@@ -33,8 +34,22 @@ class Product extends Model
     }
 
     /**
+     * Sets the location of a specific product by first detaching all locations and then attaching just one location.
+     * 
+     * @param int $id location id to set
+     * @return void
+     */
+    public function setLocation($id)
+    {
+        $this->locations()->detach();
+
+        $this->addLocation($id);
+    }
+
+    /**
      * Searches for a product based on their ID or Name.
      *
+     * @param string $search the string to search for
      * @return void
     */
     public static function search($search)

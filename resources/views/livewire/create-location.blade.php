@@ -1,16 +1,15 @@
 <div>
-  <form>
-    <div class="form-group toHide">
+    <div class="form-group">
       <label for="locatieNaamInput">Locatienaam</label>
-      <input type="text" class="form-control" id="locatieNaamInput" wire:model="locatie" placeholder="Locatie">
+      <input type="text" class="form-control" id="locatieNaamInput" wire:model="newlocatienaam" placeholder="Locatie">
     </div>
-    <div class="form-group toHide">
+    <div class="form-group">
       <label for="locatieAdresInput">Adres</label>
-      <input type="text" class="form-control" id="locatieAdresInput" wire:model="adres" placeholder="Adres">
+      <input type="text" class="form-control" id="locatieAdresInput" wire:model="newlocatieadres" placeholder="Adres">
     </div>
-    <div class="form-group toHide">
+    <div class="form-group">
       <label for="locatiePostcodeInput">Postcode</label>
-      <input type="text" class="form-control" id="locatiePostcodeInput" wire:model="postcode" placeholder="Postcode">
+      <input type="text" class="form-control" id="locatiePostcodeInput" wire:model="newlocatiepostcode" placeholder="Postcode">
     </div>
     {{-- <div class="form-group">
         <label for="newlocatieInput">Locatie</label>
@@ -27,5 +26,4 @@
       <input type="text" class="form-control" id="postcodeInput" wire:model="postcode" placeholder= "Postcode">
       @error('postcode') <span class="text-danger error">{{ $message }}</span>@enderror
     </div> --}}
-  </form>
 </div>
